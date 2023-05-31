@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/curve_clipper.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -20,11 +22,14 @@ class _LoginScreenState extends State<LoginScreen> {
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
-              Image(
-                height: MediaQuery.of(context).size.height / 2.5,
-                image: const AssetImage('assets/images/login_background.jpg'),
-                fit: BoxFit.cover,
-                width: double.infinity,
+              ClipPath(
+                clipper: CurveClipper(),
+                child: Image(
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  image: const AssetImage('assets/images/login_background.jpg'),
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
               ),
               Text(
                 "FRENZY",
@@ -32,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Theme.of(context).primaryColor,
                   fontSize: 34.0,
                   fontWeight: FontWeight.bold,
-                  letterSpacing: 1.0,
+                  letterSpacing: 10.0,
                 ),
               ),
               const SizedBox(height: 10),
@@ -62,12 +67,56 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 60),
-                height: 45.0,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(30),
+              SizedBox(height: 40),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 60),
+                  //  With following property my Container would expand
+                  //  to fill the whole screen.otherwise without it
+                  //  Container would shrink to size of Text widget.
+                  alignment: Alignment.center,
+                  height: 45.0,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+              //  Below I'm using "Expanded" widget to take all the
+              //  available space of end and with help of "Align" i'm
+              //  forcing the Container to be placed at bottom end of
+              //  the screen. With these properties even when keyboard
+              //  comes up we can still see the "Sign Up" text struck
+              //  at the bottom of the screen.
+              Expanded(
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      alignment: Alignment.center,
+                      color: Theme.of(context).primaryColor,
+                      height: 80.0,
+                      child: Text(
+                        'Don\'t have an account? Sign up',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
